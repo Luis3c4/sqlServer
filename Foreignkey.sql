@@ -7,6 +7,7 @@ ALTER TABLE tblTransaction with nocheck --Esto sirve cuando ya tienes datos que 
 add constraint FK_tblTransaction_EmployeeNumber FOREIGN KEY (EmployeeNumber)
 References employee(EmployeeNumber)
 ON UPDATE cascade 
+on DELETE SET DEFAULT
 
 	UPDATE employee Set EmployeeNumber = 9123 where EmployeeNumber = 123
 	
