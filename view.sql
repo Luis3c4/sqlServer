@@ -24,14 +24,16 @@ SELECT * from ViewByDepartment order by EmployeeNumber
 ROLLBACK tran
 
 
-create view ViewByDepartment with encryption as
-SELECT D.Department, T.EmployeeNumber, T.DateOfTransaction, T.Amount as TotalAmount from tblDepartment D
-LEFT JOIN employee E
+create view ViewByDepartment with schemabinding as
+SELECT D.Department, T.EmployeeNumber, T.DateOfTransaction, T.Amount as TotalAmount from dbo.tblDepartment D
+inner JOIN dbo.employee E
 on D.Department = E.Department
-left join tblTransaction T
+inner join dbo.tblTransaction T
 on E.EmployeeNumber = T.EmployeeNumber
 where T.EmployeeNumber between 120 and 139
-with check option -- hace que cumple la condicion a la hora de ejutar un update o select en la vista
+go
+
+create unique clustered index inx_ViewByDeparment on dbo.ViewByDepartment(EmployeeNumber, Department, DateOfTransaction)
 
 SELECT * from ViewByDepartment order by EmployeeNumber 
 
